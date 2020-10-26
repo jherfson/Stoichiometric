@@ -1,9 +1,0 @@
-pymatgen
-
-[dev]
-ipython
-ipdb
-isort
-pytest
-black
-flake8
