@@ -138,3 +138,5 @@ dmypy.json
 cython_debug/
 /stoichiometric.egg-info
 reacao.json
+reacao.py
+
