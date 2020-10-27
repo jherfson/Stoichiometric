@@ -106,16 +106,14 @@ class Stoichiometric():
 
     def individual_mass(self):
         mass = self.to_dict()
+        compost = []
 
         for i in range(len(mass)):
             for composto, massa in mass[i].items():
-                #result = {composto : massa['massa']}
-                print(composto +": "+str(massa['massa']))
-                print(i)
-                #return composto, massa['massa']
-                
-                #print(composto, massa['massa'])
-        #return result 
+                result = {composto : massa['massa']}
+                compost.append(result)
+  
+        return compost 
 
 
 
