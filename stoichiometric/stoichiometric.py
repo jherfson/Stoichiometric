@@ -78,8 +78,8 @@ class Stoichiometric():
         massa.append(self.mass_production2)
         chemical_compounds = []
         for i in range(len(self.reaction.coeffs)):
-            x = {comp[i]: {'coefciente': self.reaction.coeffs[i], 'peso molecular': Composition(
-                comp[i]).weight, 'mol': mol[i], 'mass': massa[i]}}
+            x = {comp[i]: {'coefciente': round(self.reaction.coeffs[i], 4), 'peso molecular': round(Composition(
+                comp[i]).weight, 4), 'mol': round(mol[i], 4), 'mass': round(massa[i], 4)}}
             chemical_compounds.append(x)
         return chemical_compounds
 
@@ -99,9 +99,12 @@ class Stoichiometric():
             [type]: [description]
         """
         return {
-            f'massa do reagente: {sum(self.mass_reactant)}',
-            f'massa do produto: {self.soma_production}'
+            f'massa do reagente: {round(sum(self.mass_reactant), 4)}',
+            f'massa do produto: {round(self.soma_production, 4)}'
         }
+
+    def individual_mass(self):
+        pass
 
 
 if __name__ == "__main__":

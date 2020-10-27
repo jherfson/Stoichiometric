@@ -1,4 +1,4 @@
-from stoichiometric.stoichiometric.stoichiometric import Stoichiometric
+from stoichiometric.stoichiometric import Stoichiometric
 ##import stoichiometric 
 
 eq = "Li2CO3 + Nb2O5 -> Li1Nb3O8 + CO2"
