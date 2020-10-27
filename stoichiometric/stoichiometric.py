@@ -79,8 +79,9 @@ class Stoichiometric():
         chemical_compounds = []
         for i in range(len(self.reaction.coeffs)):
             x = {comp[i]: {'coefciente': round(self.reaction.coeffs[i], 4), 'peso molecular': round(Composition(
-                comp[i]).weight, 4), 'mol': round(mol[i], 4), 'mass': round(massa[i], 4)}}
+                comp[i]).weight, 4), 'mol': round(mol[i], 4), 'massa': round(massa[i], 4)}}
             chemical_compounds.append(x)
+        #return chemical_compounds[0].keys()
         return chemical_compounds
 
 
@@ -104,13 +105,25 @@ class Stoichiometric():
         }
 
     def individual_mass(self):
-        pass
+        mass = self.to_dict()
+
+        for i in range(len(mass)):
+            for composto, massa in mass[i].items():
+                #result = {composto : massa['massa']}
+                print(composto +": "+str(massa['massa']))
+                print(i)
+                #return composto, massa['massa']
+                
+                #print(composto, massa['massa'])
+        #return result 
 
 
-# if __name__ == "__main__":
-#     eq = input("Digite a equação química: ")
-#     mass = float(input("Digite o valor da massa: "))
-#     st = Stoichiometric(eq, mass)
-#     print(st.to_json())
-# #    print(st.print_total_mass())
+
+if __name__ == "__main__":
+    eq = input("Digite a equação química: ")
+    mass = float(input("Digite o valor da massa: "))
+    st = Stoichiometric(eq, mass)
+#    print(st.to_json())
+#    print(st.to_dict())
+    print(st.individual_mass())
     
