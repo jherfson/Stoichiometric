@@ -107,10 +107,10 @@ class Stoichiometric():
         pass
 
 
-if __name__ == "__main__":
-    eq = input("Digite a equação química: ")
-    mass = float(input("Digite o valor da massa: "))
-    st = Stoichiometric(eq, mass)
-    print(st.to_json())
-#    print(st.print_total_mass())
+# if __name__ == "__main__":
+#     eq = input("Digite a equação química: ")
+#     mass = float(input("Digite o valor da massa: "))
+#     st = Stoichiometric(eq, mass)
+#     print(st.to_json())
+# #    print(st.print_total_mass())
     
