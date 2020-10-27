@@ -81,7 +81,7 @@ class Stoichiometric():
             x = {comp[i]: {'coefciente': round(self.reaction.coeffs[i], 4), 'peso molecular': round(Composition(
                 comp[i]).weight, 4), 'mol': round(mol[i], 4), 'massa': round(massa[i], 4)}}
             chemical_compounds.append(x)
-        #return chemical_compounds[0].keys()
+
         return chemical_compounds
 
 
@@ -104,16 +104,20 @@ class Stoichiometric():
             f'massa do produto: {round(self.soma_production, 4)}'
         }
 
-    def individual_mass(self):
+    def print_mass(self):
+        """[created a new function that prints the compound and the dough]
+
+        Returns:
+            [dict]: [compound and mass in grams. "Li2CO3 " : (-0.4466)g]
+        """
         mass = self.to_dict()
-        compost = []
+        result = {}
 
         for i in range(len(mass)):
             for composto, massa in mass[i].items():
-                result = {composto : massa['massa']}
-                compost.append(result)
-  
-        return compost 
+                result[composto] = massa['massa']
+     
+        return json.dumps(result, indent=4, separators=(", ", " : ")) 
 
 
 
@@ -123,5 +127,5 @@ if __name__ == "__main__":
     st = Stoichiometric(eq, mass)
 #    print(st.to_json())
 #    print(st.to_dict())
-    print(st.individual_mass())
+    print(st.print_mass())
     
