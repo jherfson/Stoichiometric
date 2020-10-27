@@ -112,5 +112,5 @@ if __name__ == "__main__":
     mass = float(input("Digite o valor da massa: "))
     st = Stoichiometric(eq, mass)
     print(st.to_json())
-    print(st.print_total_mass())
+#    print(st.print_total_mass())
     
