@@ -125,7 +125,7 @@ if __name__ == "__main__":
     eq = input("Digite a equação química: ")
     mass = float(input("Digite o valor da massa: "))
     st = Stoichiometric(eq, mass)
-#    print(st.to_json())
-#    print(st.to_dict())
+    print(st.to_json())
+    print(st.to_dict())
     print(st.print_mass())
     
