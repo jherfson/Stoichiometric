@@ -5,7 +5,7 @@ from pymatgen.core.composition import Composition
 
 __autor__ = 'Jherfson Castro Gomes'
 __email__ = 'jherfson.castro@gmail.com'
-__version__ = '2020.3.8'
+__version__ = '2020.21.11'
 __date__ = 'apr 24, 2020'
 
 
@@ -36,25 +36,29 @@ class Stoichiometric():
 
 
         self.reaction = Reaction(reactants, producers)
+        print(self.reaction)
 
         self.mol_reactant = []
+        self.mol_production = []
         self.mass_reactant = []
+        self.massa_production = []
 
-        for i in range(len(self.reagent)):
-            mol = (self.reaction.coeffs[i]/self.reaction.coeffs[-2]) * \
-                (mass_production/Composition(self.producer[-2]).weight)
-            self.mol_reactant.append(mol)
-            mass = mol * Composition(self.reagent[i]).weight
-            self.mass_reactant.append(mass)
+        tam = int(len(producers))
+        
+        j = 0
 
-
-        self.mol_production1 = mass_production/Composition(self.producer[-2]).weight
-        self.mol_production2 = (self.reaction.coeffs[-1]/self.reaction.coeffs[-2]) * \
-            (mass_production/Composition(self.producer[-2]).weight)
-
-        self.mass_production2 = self.mol_production2*Composition(self.producer[-1]).weight
-
-        self.soma_production = mass_production + self.mass_production2
+        for i in range(len(self.reaction.coeffs)):
+            if i < tam:
+                mol = (self.reaction.coeffs[i]/self.reaction.coeffs[-tam]) * (mass_production/Composition(self.producer[-tam]).weight)
+                self.mol_reactant.append(mol)
+                mass = mol * Composition(self.reagent[i]).weight
+                self.mass_reactant.append(mass)
+            else:
+                mol_ = (self.reaction.coeffs[i]/self.reaction.coeffs[-tam]) * (mass_production/Composition(self.producer[-tam]).weight)
+                self.mol_production.append(mol_)
+                mass_ = mol_ * Composition(self.producer[j]).weight
+                j = j + 1
+                self.massa_production.append(mass_)
 
 
     def to_dict(self):
@@ -69,17 +73,15 @@ class Stoichiometric():
 
         # mol
         mol = self.mol_reactant.copy()
-        mol.append(self.mol_production1)
-        mol.append(self.mol_production2)
+        mol.extend(self.mol_production)
 
         # mass
         massa = self.mass_reactant.copy()
-        massa.append(self.mass_production)
-        massa.append(self.mass_production2)
+        massa.extend(self.massa_production)
+
         chemical_compounds = []
         for i in range(len(self.reaction.coeffs)):
-            x = {comp[i]: {'coefciente': round(self.reaction.coeffs[i], 4), 'peso molecular': round(Composition(
-                comp[i]).weight, 4), 'mol': round(mol[i], 4), 'massa': round(massa[i], 4)}}
+            x = {comp[i]: {'coefciente': round(self.reaction.coeffs[i], 4), 'peso molecular': round(Composition(comp[i]).weight, 4), 'mol': round(mol[i], 4), 'massa': round(massa[i], 4)}}
             chemical_compounds.append(x)
 
         return chemical_compounds
@@ -91,18 +93,8 @@ class Stoichiometric():
         Returns:
             [type]: [description]
         """
-        return json.dumps(self.to_dict(), indent=4, separators=(", ", " = "))
+        return json.dumps(self.to_dict(), indent=4, separators=(", ", " : "))
 
-    def print_total_mass(self):
-        """[summary]
-
-        Returns:
-            [type]: [description]
-        """
-        return {
-            f'massa do reagente: {round(sum(self.mass_reactant), 4)}',
-            f'massa do produto: {round(self.soma_production, 4)}'
-        }
 
     def print_mass(self):
         """[created a new function that prints the compound and the dough]
@@ -117,15 +109,4 @@ class Stoichiometric():
             for composto, massa in mass[i].items():
                 result[composto] = massa['massa']
      
-        return json.dumps(result, indent=4, separators=(", ", " : ")) 
-
-
-
-if __name__ == "__main__":
-    eq = input("Digite a equação química: ")
-    mass = float(input("Digite o valor da massa: "))
-    st = Stoichiometric(eq, mass)
-    print(st.to_json())
-    print(st.to_dict())
-    print(st.print_mass())
-    
+        return json.dumps(result, indent=4, separators=(", ", " : "))
